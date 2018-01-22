@@ -207,26 +207,29 @@ namespace FlyFigureWinForms
                 f.Move(this.pointMax);
                 f.Draw(e.Graphics);
             }
-            foreach (var f in listFigures)
+
+            if (CrossingFigure != null)
             {
-                foreach (var fig in listFigures)
+                foreach (var f in listFigures)
                 {
-                    if (!f.Equals(fig))
+                    foreach (var fig in listFigures)
                     {
-                        for (int j = fig.CoordX; j < fig.CoordX + fig.SizeX; j++)
+                        if (!f.Equals(fig))
                         {
-                            if (j > f.CoordX && j < f.CoordX + f.SizeX)
+                            for (int j = fig.CoordX; j < fig.CoordX + fig.SizeX; j++)
                             {
-                                for (int i = fig.CoordY; i < fig.CoordY + fig.SizeY; i++)
+                                if (j > f.CoordX && j < f.CoordX + f.SizeX)
                                 {
-                                    if (i > f.CoordY && i < f.CoordY + f.SizeY)
+                                    for (int i = fig.CoordY; i < fig.CoordY + fig.SizeY; i++)
                                     {
-                                        if(CrossingFigure!=null)
+                                        if (i > f.CoordY && i < f.CoordY + f.SizeY)
                                         {
                                             CrossingFigure(this, new CrossingFigureEventArgs(f, fig));
+                                            break;
                                         }
                                     }
                                 }
+                                break;
                             }
                         }
                     }
